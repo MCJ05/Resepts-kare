@@ -1,0 +1,24 @@
+
+Applikationen ska kunna:
+
+1. läsa den sökfras som användaren skriver i formuläret
+2. kontrollera att en sökfras har angetts
+3. göra ett asynkront API-anrop med fetch()
+4. använda async/await för att invänta och hantera svaret
+5. omvandla API-svaret från JSON
+6. kontrollera om sökningen gav något resultat
+7. presentera det första receptet från sökresultatet
+8. skapa receptets innehåll dynamiskt med JavaScript
+9. hantera fel som kan uppstå vid API-anropet
+10. ersätta tidigare recept när användaren gör en ny sökning
+
+
+Visa resept:
+- receptets namn
+- bild
+- antal portioner (servings)
+- förberedelsetid (prepTimeMinuites)
+- tillagningstid (cookTimeMiunites)
+- svårtighetsgrad (difficulty)
+- ingredienser (ingredients)
+. instruktioner (instructions)
