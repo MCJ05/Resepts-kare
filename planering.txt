@@ -1,6 +1,5 @@
 
 Applikationen ska kunna:
-
 1. läsa den sökfras som användaren skriver i formuläret
 2. kontrollera att en sökfras har angetts
 3. göra ett asynkront API-anrop med fetch()
