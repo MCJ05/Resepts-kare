@@ -4,7 +4,11 @@
  * Namn: Moa Jönsson
  */
 // Hämta element från DOM
-
+const Form = document.querySelector("#searchform");
+const Error = document.querySelector("#errorList")
+const SearchButton = document.querySelector("#search");
+const Message = document.querySelector("#massage");
+const Recipt = document.querySelector("#recipt")
 
 
 console.log("Start");
