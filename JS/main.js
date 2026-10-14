@@ -30,6 +30,10 @@ searchForm.addEventListener("Submit", function (event) {
     errorEl.textContent = "";
     messageEl.textContent = "";
 
+    // Ta bort tidigare recept
+
+
+    // Starta hämtningen av recept
 
 });
 
@@ -38,13 +42,28 @@ searchForm.addEventListener("Submit", function (event) {
 
 
 
-// Hämtat sökfras från dummyjson.com
-async function getRecipt() {
+// Hämtat sökfras från DUMMYJSON API
+async function getRecipt(serchTerm) {
      try {
-        const respons = await fetch ('https://dummyjson.com/recipes/serch?q=Margherita');
+        // Skapar API-adress med användarens sökfras
+        const url = `https://dummyjson.com/recipes/serch?q=${encodeURIComponent(searchTerm)}`;
+        // Hämta data från API:et
+        const respons = await fetch(url);
+        
+        // Kontrollera att anropet lyckats
         if(!respons.ok) {
             throw new Error("Kunde inte hämta recept. Försök igen senare");
         }
+
+        // Omvandla JSON-svaret till ett JS-objekt
+
+        // Kontrollera att svaret innehåller ett recept
+
+        // Kontrollera att sökningen ger något resultat
+
+        // Visa reseptet på hemsidan
+
+        
 
     } catch (error) {
         console.log("Det uppstod ett fel: " + error);
