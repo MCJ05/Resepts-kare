@@ -10,9 +10,8 @@ const RecipSearch = document.querySelector("#recipe");
 
 const messageEl = document.querySelector("#massage");
 const errorEl = document.querySelector("#error");
-const outputEl = document.querySelector("#output");
 
-
+/*
 // Kör funktionen när användaren skickar formuläret
 searchForm.addEventListener("Submit", function(event) {
     event.preventDefault();
@@ -35,10 +34,84 @@ searchForm.addEventListener("Submit", function(event) {
 
     // Starta hämtningen av recept
     getRecipt(serchTerm); 
-});
+}); */
+
+searchForm.addEventListener("submit", handelSearch);
+
+// Hanterar formuläret och startar sökningen
+async function handelSearch(event) {
+    event.preventDefault();
+
+}
+
+// Hämta sökfras från formuläret
+function getSearchTerm() {
+
+}
+
+// Rensar tidigare fel- och resultatmeddelanden
+function clearMessages() {
+
+}
+
+// Kontrollerar att dökfrasen inte är tom
+function validateSearch(searchTerm) {
+
+}
+
+// Visa felmeddelanden
+// API-anrop och sökresultat
+function showMessage(message) {
+
+}
+
+// Skapar API.adressen för sökningen
+function createApiUrl(searchTerm) {
+
+}
+
+// Hämtar recept från DummyJSON
+async function getRecipt(searchTerm) {
+
+}
+
+// Skapar och visar receptet
+function displayRecipe(recipe) {
+
+}
+
+// Skapar ett HTML-element
+function createElement(tegName) {
+
+}
+
+// Skapar ett HTML-element m. text
+function createTextElement(tagName, text) {
+
+}
+
+// Skapar receptets bild
+function createRecipeImage(recipe) {
+
+}
+
+// Skapar ett stycke m. en rubrik och ett värde
+function createInfoParagraph(label, value) {
+
+}
+
+// Skapar receptets informationsområde
+function createRecipeInfo(recipe) {
+
+}
+
+// Skapar en lista m. ingredienser eller instruktioner
+function createList(listType, items) {
+    
+}
 
 
-// Hämtat sökfras från DummyJSON API
+/*
 async function getRecipt(serchTerm) {
     try {
         // Skapar API-adress med användarens sökfras
@@ -178,4 +251,4 @@ function displayRecipe(recipe) {
 
     // Visa receptet i HTML-filens section
     recipeSection.replaceChildren(article);
-}
+} */
