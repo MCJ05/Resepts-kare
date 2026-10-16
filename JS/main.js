@@ -13,36 +13,32 @@ const errorEl = document.querySelector("#error");
 const outputEl = document.querySelector("#output");
 
 
-
-
-
-console.log("Start");
-
 // Kör funktionen när användaren skickar formuläret
-searchForm.addEventListener("Submit", function (event) {
+searchForm.addEventListener("Submit", function(event) {
     event.preventDefault();
 
     // Läser användarens sökfras
     const serchTerm = searchInput.value.trim();
 
-
     // Tar bort tidigare sökfraser
     errorEl.textContent = "";
     messageEl.textContent = "";
 
+    // Kontrolera att sökfrasen inte är tom
+    if(serchTerm === "") {
+        errorEl.textContent = "Fyll i en maträtt";
+        return;
+    }
+    /*
     // Ta bort tidigare recept
-
+    recipeSection.replaceChildren();
 
     // Starta hämtningen av recept
-
+    getRecipt(serchTerm); */
 });
 
 
-
-
-
-
-// Hämtat sökfras från DUMMYJSON API
+// Hämtat sökfras från DummyJSON API
 async function getRecipt(serchTerm) {
      try {
         // Skapar API-adress med användarens sökfras
@@ -52,31 +48,45 @@ async function getRecipt(serchTerm) {
         
         // Kontrollera att anropet lyckats
         if(!respons.ok) {
-            throw new Error("Kunde inte hämta recept. Försök igen senare");
+            throw new error("Kunde inte hämta recept. Försök igen senare");
         }
 
-        // Omvandla JSON-svaret till ett JS-objekt
+        // Omvandla JSON-svaret rill ett js-objekt
 
+        
         // Kontrollera att svaret innehåller ett recept
 
-        // Kontrollera att sökningen ger något resultat
 
         // Visa reseptet på hemsidan
 
-        
 
     } catch (error) {
         console.log("Det uppstod ett fel: " + error);
     }
 }
 
+function displayRecipe(recipe) {
 
-/*.then (res => res.json())
-.then (console.log);*/
+    // Receptets namn
 
+    // Receptets bild
+    
+    // Information om recemtet
 
-// Sök knappen
+    // Antal portioner
 
+    // Förberedelsetid
 
+    // Tillagningstid
 
-console.log("Slut");
+    // Svårighetsgrad
+
+    // Ingrediensernas - rubrok & punktlista
+
+    // Instruktioners rubrik & numrerad lista
+
+    // Lägg till element i receptets article
+
+    // Visa receptet i HTML-filens section
+
+}
