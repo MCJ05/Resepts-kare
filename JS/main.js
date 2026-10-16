@@ -77,26 +77,42 @@ async function getRecipt(serchTerm) {
 }
 
 function displayRecipe(recipe) {
+    const article = document.createElement("article");
+    console.log(article);
 
     // Receptets namn
+    const title = document.createElement("h3");
+    title.textContent = recipe.name;
 
     // Receptets bild
-    
-    // Information om recemtet
+    const image = document.createElement("img");
+    image.src = recipe.image;
+    image.alt = recipe.name;
+
+    // Information om reseptet
+    const recipeInfo = document.createElement("div");
+    recipeInfo.classList.add("recipe-info");
 
     // Antal portioner
 
+
     // Förberedelsetid
+
 
     // Tillagningstid
 
+
     // Svårighetsgrad
+
 
     // Ingrediensernas - rubrok & punktlista
 
+
     // Instruktioners rubrik & numrerad lista
 
+
     // Lägg till element i receptets article
+
 
     // Visa receptet i HTML-filens section
 
