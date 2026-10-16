@@ -29,18 +29,18 @@ searchForm.addEventListener("Submit", function(event) {
         errorEl.textContent = "Fyll i en maträtt";
         return;
     }
-    /*
+    
     // Ta bort tidigare recept
     recipeSection.replaceChildren();
 
     // Starta hämtningen av recept
-    getRecipt(serchTerm); */
+    getRecipt(serchTerm); 
 });
 
 
 // Hämtat sökfras från DummyJSON API
 async function getRecipt(serchTerm) {
-     try {
+    try {
         // Skapar API-adress med användarens sökfras
         const url = `https://dummyjson.com/recipes/serch?q=${encodeURIComponent(serchTerm)}`;
         // Hämta data från API:et
@@ -166,8 +166,16 @@ function displayRecipe(recipe) {
     });
 
     // Lägg till element i receptets article
-
+    article.append(
+        title,
+        image,
+        recipeInfo,
+        ingredientsHeading,
+        ingredientsList,
+        instructionsHeading,
+        instructionsList
+    );
 
     // Visa receptet i HTML-filens section
-
+    recipeSection.replaceChildren(article);
 }
