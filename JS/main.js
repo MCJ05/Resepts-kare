@@ -185,6 +185,10 @@ function createRecipeInfo(recipe) {
     info.append(
         createInfoParagraph("Servings", recipe.servings),
         createInfoParagraph(
+            "Prep time",
+            `${recipe.prepTimeMinutes} minutes`
+        ),
+        createInfoParagraph(
             "Cooking time",
             `${recipe.cookTimeMinutes} minutes`
         ),
