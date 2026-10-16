@@ -42,7 +42,7 @@ searchForm.addEventListener("Submit", function(event) {
 async function getRecipt(serchTerm) {
      try {
         // Skapar API-adress med användarens sökfras
-        const url = `https://dummyjson.com/recipes/serch?q=${encodeURIComponent(searchTerm)}`;
+        const url = `https://dummyjson.com/recipes/serch?q=${encodeURIComponent(serchTerm)}`;
         // Hämta data från API:et
         const respons = await fetch(url);
         
@@ -51,14 +51,25 @@ async function getRecipt(serchTerm) {
             throw new error("Kunde inte hämta recept. Försök igen senare");
         }
 
-        // Omvandla JSON-svaret rill ett js-objekt
+        // Omvandla JSON-svaret till ett js-objekt
+        const data = await respons.json();
 
-        
         // Kontrollera att svaret innehåller ett recept
+        if(!data || !Array.isArray(data.recipes)) {
+            throw new error("API:et returnea ogiltig data");
+        }
 
+        // Kontrollera att sökningen ger något resultat
+        if(data.recipe.length === 0) {
+            messageEl.textContent = "Inger recept hittades";
+            return;
+        }
 
         // Visa reseptet på hemsidan
+        const recipe = data.recipe[0];
 
+        console.log(serchTerm);
+        console.log(recipe);
 
     } catch (error) {
         console.log("Det uppstod ett fel: " + error);
