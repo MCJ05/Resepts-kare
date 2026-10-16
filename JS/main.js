@@ -94,19 +94,55 @@ function displayRecipe(recipe) {
     recipeInfo.classList.add("recipe-info");
 
     // Antal portioner
-
+    const servings = document.createElement("P");
+    const servingsLabel = document.createElement("strong");
+    servingsLabel.textContent = "Portioner: ";
+    servings.append(
+        servingsLabel, 
+        document.createTextNode(String(recipe.servings))
+    );
 
     // Förberedelsetid
-
+    const prepTime = document.createElement("p");
+    const prepLabel = document.createElement("strong");
+    prepLabel.textContent = "Förberedelse tid: ";
+    prepTime.append(
+        prepLabel, 
+        document.createTextNode(
+            `${recipe.prepTimeMinutes} minuter`
+        )
+    );
 
     // Tillagningstid
-
+    const cookTime = document.createElement("p");
+    const cookLabel = document.createElement("strong");
+    cookLabel.textContent = "Tilagnings tid: ";
+    cookTime.append(
+        cookLabel, 
+        document.createTextNode(
+            `${recipe.cookTimeMinutes} minuter`
+        )
+    );
 
     // Svårighetsgrad
+    const difficulty = document.createElement("p");
+    const difficultyLabel = document.createElement("strong");
+    difficultyLabel.textContent = "Svårighetsgrad: ";
+    difficulty.append(
+        difficultyLabel,
+        document.createTextNode(recipe.difficulty)
+    );
 
+    // Samla receptinformation
+     recipeInfo.append(
+        servings,
+        prepTime,
+        cookTime,
+        difficulty
+    );
 
     // Ingrediensernas - rubrok & punktlista
-
+    
 
     // Instruktioners rubrik & numrerad lista
 
