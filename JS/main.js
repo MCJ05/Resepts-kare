@@ -8,33 +8,9 @@ const searchForm = document.querySelector("#searchform");
 const searchInput = document.querySelector("#search");
 const RecipSearch = document.querySelector("#recipe");
 
-const messageEl = document.querySelector("#massage");
-const errorEl = document.querySelector("#error");
+const messageElement = document.querySelector("#massage");
+const errorElement = document.querySelector("#error");
 
-/*
-// Kör funktionen när användaren skickar formuläret
-searchForm.addEventListener("Submit", function(event) {
-    event.preventDefault();
-
-    // Läser användarens sökfras
-    const serchTerm = searchInput.value.trim();
-
-    // Tar bort tidigare sökfraser
-    errorEl.textContent = "";
-    messageEl.textContent = "";
-
-    // Kontrolera att sökfrasen inte är tom
-    if(serchTerm === "") {
-        errorEl.textContent = "Fyll i en maträtt";
-        return;
-    }
-    
-    // Ta bort tidigare recept
-    recipeSection.replaceChildren();
-
-    // Starta hämtningen av recept
-    getRecipt(serchTerm); 
-}); */
 
 searchForm.addEventListener("submit", handelSearch);
 
@@ -42,203 +18,112 @@ searchForm.addEventListener("submit", handelSearch);
 async function handelSearch(event) {
     event.preventDefault();
 
+    const searchTerm = getSearchTerm();
+
+    clearMessages();
+
+    if(!validateSearch(searchTerm)) {
+        return;
+    }
+
+    clearRecipe();
+    
+    await getRecipt(searchTerm);
 }
 
 // Hämta sökfras från formuläret
 function getSearchTerm() {
-
+    return searchInput.value.trim();
 }
 
 // Rensar tidigare fel- och resultatmeddelanden
 function clearMessages() {
-
+    errorElement.textContent = "";
+    messageElement.textContent = "";
 }
 
 // Kontrollerar att dökfrasen inte är tom
 function validateSearch(searchTerm) {
+    if(searchTerm === "") {
+        errorEl.textContent = "Fyll i en sökfras";
+        return false;
+    }
+    console.log(searchTerm);
 
+    return true;
 }
 
 // Visa felmeddelanden
 // API-anrop och sökresultat
 function showMessage(message) {
+    messageElement.textContent = message;
+}
 
+// Tar bort tidigare recept
+function clearRecipe() {
+    recipeSection.replaceChildren();
 }
 
 // Skapar API.adressen för sökningen
 function createApiUrl(searchTerm) {
+    const encodedSerchTerm = encodeURICompenent(searchTerm);
 
+    return `https://dummyjson.com/recipes/serch?q=${encodedSerchTerm}`;
 }
 
 // Hämtar recept från DummyJSON
 async function getRecipt(searchTerm) {
+    try {
+        const url = createApiUrl(searchTerm);
 
+        // Skicka försfrågan till API:et
+        const respons = await fetch(url);
+
+        // Kontrollera om HTTP-anropet lyckats
+        if(!respons.ok) {
+            throw new Error(`HTTP-fel: ${respons.status}`);
+        }
+
+        // Omvandla JSON-svaret till ett JavaScript-objekt
+        const data = await respons.json();
+
+        // Kontrollera att API-svaret 
+        if(!data || !Array.isArray(data.recipes)) {
+            throw new Error("Ogiltigt svar från API:et");
+        }
+
+        // Kontrollera om några recept hittas
+        if(data.recipes.length === 0) {
+            showMessage("Inga recept hittades. Försök med en annan sökfras.");
+            return;
+        }
+
+        // Hämta det första receptet
+        const recipe = data.recipes[0];
+
+        // Visa receptet
+        displayRecipe(recipe);
+    } catch (error) {
+        clearRecipe();
+
+        showMessage("Det gick inte att hämta recept. Försök igen senare.");
+
+        console.error("Fel vid hämtning av recept.", error);
+    }
 }
 
 // Skapar och visar receptet
 function displayRecipe(recipe) {
+    const article = createElement("aticle");
+    const title = createTextElement("hs", recipe.name);
+    const image = createRecipeImage(recipe);
+    const recipeInfo =createRecipeInfo(recipe);
+    const ingredientsHeading = createTextElement("h4", "Ingredienser");
+    const ingredientsList = createList("ul", recipe.ingredients);
+    const instructionsHeading = createTextElement("h4", "Instruktioner");
+    const instructionsList = createList("ol", recipe.instructions);
 
-}
-
-// Skapar ett HTML-element
-function createElement(tegName) {
-
-}
-
-// Skapar ett HTML-element m. text
-function createTextElement(tagName, text) {
-
-}
-
-// Skapar receptets bild
-function createRecipeImage(recipe) {
-
-}
-
-// Skapar ett stycke m. en rubrik och ett värde
-function createInfoParagraph(label, value) {
-
-}
-
-// Skapar receptets informationsområde
-function createRecipeInfo(recipe) {
-
-}
-
-// Skapar en lista m. ingredienser eller instruktioner
-function createList(listType, items) {
-    
-}
-
-
-/*
-async function getRecipt(serchTerm) {
-    try {
-        // Skapar API-adress med användarens sökfras
-        const url = `https://dummyjson.com/recipes/serch?q=${encodeURIComponent(serchTerm)}`;
-        // Hämta data från API:et
-        const respons = await fetch(url);
-        
-        // Kontrollera att anropet lyckats
-        if(!respons.ok) {
-            throw new error("Kunde inte hämta recept. Försök igen senare");
-        }
-
-        // Omvandla JSON-svaret till ett js-objekt
-        const data = await respons.json();
-
-        // Kontrollera att svaret innehåller ett recept
-        if(!data || !Array.isArray(data.recipes)) {
-            throw new error("API:et returnea ogiltig data");
-        }
-
-        // Kontrollera att sökningen ger något resultat
-        if(data.recipe.length === 0) {
-            messageEl.textContent = "Inger recept hittades";
-            return;
-        }
-
-        // Visa reseptet på hemsidan
-        const recipe = data.recipe[0];
-
-        console.log(serchTerm);
-        console.log(recipe);
-
-    } catch (error) {
-        console.log("Det uppstod ett fel: " + error);
-    }
-}
-
-function displayRecipe(recipe) {
-    const article = document.createElement("article");
-    console.log(article);
-
-    // Receptets namn
-    const title = document.createElement("h3");
-    title.textContent = recipe.name;
-
-    // Receptets bild
-    const image = document.createElement("img");
-    image.src = recipe.image;
-    image.alt = recipe.name;
-
-    // Information om reseptet
-    const recipeInfo = document.createElement("div");
-    recipeInfo.classList.add("recipe-info");
-
-    // Antal portioner
-    const servings = document.createElement("P");
-    const servingsLabel = document.createElement("strong");
-    servingsLabel.textContent = "Portioner: ";
-    servings.append(
-        servingsLabel, 
-        document.createTextNode(String(recipe.servings))
-    );
-
-    // Förberedelsetid
-    const prepTime = document.createElement("p");
-    const prepLabel = document.createElement("strong");
-    prepLabel.textContent = "Förberedelse tid: ";
-    prepTime.append(
-        prepLabel, 
-        document.createTextNode(
-            `${recipe.prepTimeMinutes} minuter`
-        )
-    );
-
-    // Tillagningstid
-    const cookTime = document.createElement("p");
-    const cookLabel = document.createElement("strong");
-    cookLabel.textContent = "Tilagnings tid: ";
-    cookTime.append(
-        cookLabel, 
-        document.createTextNode(
-            `${recipe.cookTimeMinutes} minuter`
-        )
-    );
-
-    // Svårighetsgrad
-    const difficulty = document.createElement("p");
-    const difficultyLabel = document.createElement("strong");
-    difficultyLabel.textContent = "Svårighetsgrad: ";
-    difficulty.append(
-        difficultyLabel,
-        document.createTextNode(recipe.difficulty)
-    );
-
-    // Samla receptinformation
-     recipeInfo.append(
-        servings,
-        prepTime,
-        cookTime,
-        difficulty
-    );
-
-    // Ingrediensernas - rubrok & punktlista
-    const ingredientsHeading = document.createElement("h4");
-    ingredientsHeading.textContent = "Ingredienser";
-
-    const ingredientsList = document.createElement("ul");
-
-    recipe.ingredients.forEach(function (ingredients) {
-        const li = document.createElement("li");
-        li.textContent = ingredients;
-        ingredientsList.appendChild(li);
-    });
-
-    // Instruktioners rubrik & numrerad lista
-    const instructionsHeading = document.createElement("h4");
-    instructionsHeading.textContent = "Instruktioner";
-
-    const instructionsList = document.createElement("ol");
-
-    recipe.instructions.forEach(function (instructions) {
-        const li = document.createElement("li");
-        li.textContent = instructions;
-        instructionsList.appendChild(li);
-    });
-
-    // Lägg till element i receptets article
+    // Samla receptets element i rätt ordning
     article.append(
         title,
         image,
@@ -248,7 +133,71 @@ function displayRecipe(recipe) {
         instructionsHeading,
         instructionsList
     );
+}
 
-    // Visa receptet i HTML-filens section
-    recipeSection.replaceChildren(article);
-} */
+// Skapar ett HTML-element
+function createElement(tagName) {
+    return document.createElement(tagName);
+}
+
+// Skapar ett HTML-element m. text
+function createTextElement(tagName, text) {
+    const element = createElement(tagName);
+    element.textContent = text;
+
+    return element;
+}
+
+// Skapar receptets bild
+function createRecipeImage(recipe) {
+    const image = createElement("img");
+    image.src = recipe.image;
+    image.alt = recipe.name;
+
+    return image;
+}
+
+// Skapar ett stycke m. en rubrik och ett värde
+function createInfoParagraph(label, value) {
+    const paragraph = createElement("p");
+    const strong = createElement("strong");
+
+    strong.textContent = `${label}: `;
+
+    paragraph.append(
+        strong,
+        document.createTextNode(string(value))
+    );
+
+    return paragraph;
+}
+
+// Skapar receptets informationsområde
+function createRecipeInfo(recipe) {
+    const info = createElement("div");
+
+    info.classList.add("recipe-info");
+    info.append(
+        createInfoParagraph("Portion", recipe.servings),
+        createInfoParagraph(
+            "Förberedelse tid",
+            `${recipe.cookTimeMinutes} minutes`
+        ),
+        createInfoParagraph("Svårighets grad", recipe.difficulty)
+    );
+
+    return info;
+}
+
+// Skapar en lista m. ingredienser eller instruktioner
+function createList(listType, items) {
+    const list = createElement(listType);
+
+    items.forEach(function(item) {
+        const listItem = createTextElement("li", item);
+
+        list.appendChild(listItem);
+    });
+
+    return list;
+}
