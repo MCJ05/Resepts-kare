@@ -45,7 +45,7 @@ function clearMessages() {
 // Kontrollerar att dökfrasen inte är tom
 function validateSearch(searchTerm) {
     if(searchTerm === "") {
-        errorElement.textContent = "Du måste fylla i en sökfras";
+        errorElement.textContent = "Du måste fylla i en sökfras!";
         return false;
     }
 
@@ -93,7 +93,7 @@ async function getRecipt(searchTerm) {
 
         // Kontrollera om några recept hittas
         if(data.recipes.length === 0) {
-            showMessage("Inga recept hittades. Försök med en annan sökfras.");
+            showMessage("Inget recept hittades. Försök med en annan sökfras.");
             return;
         }
 
@@ -186,7 +186,7 @@ function createRecipeInfo(recipe) {
         createInfoParagraph("Servings", recipe.servings),
         createInfoParagraph(
             "Cooking time",
-            `${recipe.cookTimeMinutes} Minutes`
+            `${recipe.cookTimeMinutes} minutes`
         ),
         createInfoParagraph("Difficulty", recipe.difficulty)
     );
