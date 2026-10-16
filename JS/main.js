@@ -6,9 +6,9 @@
 // Hämta element från HTML-filen
 const searchForm = document.querySelector("#searchform");
 const searchInput = document.querySelector("#search");
-const RecipSearch = document.querySelector("#recipe");
+const recipeSection = document.querySelector("#recipe");
 
-const messageElement = document.querySelector("#massage");
+const messageElement = document.querySelector("#message");
 const errorElement = document.querySelector("#error");
 
 
@@ -45,10 +45,9 @@ function clearMessages() {
 // Kontrollerar att dökfrasen inte är tom
 function validateSearch(searchTerm) {
     if(searchTerm === "") {
-        errorEl.textContent = "Fyll i en sökfras";
+        errorElement.textContent = "Du måste fylla i en sökfras";
         return false;
     }
-    console.log(searchTerm);
 
     return true;
 }
@@ -62,13 +61,13 @@ function showMessage(message) {
 // Tar bort tidigare recept
 function clearRecipe() {
     recipeSection.replaceChildren();
+    console.log(recipeSection);
 }
 
 // Skapar API.adressen för sökningen
 function createApiUrl(searchTerm) {
-    const encodedSerchTerm = encodeURICompenent(searchTerm);
-
-    return `https://dummyjson.com/recipes/serch?q=${encodedSerchTerm}`;
+    const encodedSearchTerm = encodeURIComponent(searchTerm);
+    return `https://dummyjson.com/recipes/search?q=${encodedSearchTerm}`;
 }
 
 // Hämtar recept från DummyJSON
@@ -103,6 +102,7 @@ async function getRecipt(searchTerm) {
 
         // Visa receptet
         displayRecipe(recipe);
+
     } catch (error) {
         clearRecipe();
 
@@ -115,12 +115,14 @@ async function getRecipt(searchTerm) {
 // Skapar och visar receptet
 function displayRecipe(recipe) {
     const article = createElement("aticle");
-    const title = createTextElement("hs", recipe.name);
+    const title = createTextElement("h3", recipe.name);
     const image = createRecipeImage(recipe);
     const recipeInfo =createRecipeInfo(recipe);
-    const ingredientsHeading = createTextElement("h4", "Ingredienser");
+
+    const ingredientsHeading = createTextElement("h4", "Ingredients");
     const ingredientsList = createList("ul", recipe.ingredients);
-    const instructionsHeading = createTextElement("h4", "Instruktioner");
+
+    const instructionsHeading = createTextElement("h4", "Instructions");
     const instructionsList = createList("ol", recipe.instructions);
 
     // Samla receptets element i rätt ordning
@@ -133,6 +135,9 @@ function displayRecipe(recipe) {
         instructionsHeading,
         instructionsList
     );
+
+    // Visa artikeln på webbsidan
+    recipeSection.append(article);
 }
 
 // Skapar ett HTML-element
@@ -166,7 +171,7 @@ function createInfoParagraph(label, value) {
 
     paragraph.append(
         strong,
-        document.createTextNode(string(value))
+        document.createTextNode(String(value))
     );
 
     return paragraph;
@@ -178,12 +183,12 @@ function createRecipeInfo(recipe) {
 
     info.classList.add("recipe-info");
     info.append(
-        createInfoParagraph("Portion", recipe.servings),
+        createInfoParagraph("Servings", recipe.servings),
         createInfoParagraph(
-            "Förberedelse tid",
-            `${recipe.cookTimeMinutes} minutes`
+            "Cooking time",
+            `${recipe.cookTimeMinutes} Minutes`
         ),
-        createInfoParagraph("Svårighets grad", recipe.difficulty)
+        createInfoParagraph("Difficulty", recipe.difficulty)
     );
 
     return info;
