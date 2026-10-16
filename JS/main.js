@@ -142,10 +142,28 @@ function displayRecipe(recipe) {
     );
 
     // Ingrediensernas - rubrok & punktlista
-    
+    const ingredientsHeading = document.createElement("h4");
+    ingredientsHeading.textContent = "Ingredienser";
+
+    const ingredientsList = document.createElement("ul");
+
+    recipe.ingredients.forEach(function (ingredients) {
+        const li = document.createElement("li");
+        li.textContent = ingredients;
+        ingredientsList.appendChild(li);
+    });
 
     // Instruktioners rubrik & numrerad lista
+    const instructionsHeading = document.createElement("h4");
+    instructionsHeading.textContent = "Instruktioner";
 
+    const instructionsList = document.createElement("ol");
+
+    recipe.instructions.forEach(function (instructions) {
+        const li = document.createElement("li");
+        li.textContent = instructions;
+        instructionsList.appendChild(li);
+    });
 
     // Lägg till element i receptets article
 
